@@ -1,6 +1,6 @@
 .homepage{
     padding: 0 4rem;
-    height: calc(100vh  6.5rem);
+    height: calc(100vh - 6.5rem);
     overflow-y: scroll;
 
      h2{
@@ -141,7 +141,7 @@
                 color: var(--gray-200);
                 text-transform: uppercase;
                 font: 500 0.75rem Lexend, sans-serif;
-                text-align: center;
+                text-align: left;
             }
 
             td{
