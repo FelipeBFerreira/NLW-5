@@ -6,6 +6,8 @@ import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import { durationParseToString } from '../utils/durationparseToString';
 import styles from './home.module.scss';
+import { PlayerContext } from '../contexts/PlayerContext';
+import { useContext } from 'react';
 
 
 type Episode = {
@@ -31,40 +33,40 @@ type HomeProps = {
 }
 
 export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
-
+  
+  const {play} = useContext(PlayerContext);
+  
   return (
     <div className={styles.homepage}>
       <section className={styles.latestEpisodes}>
         <h2>Ultimos Lançamentos</h2>
-
         <ul>
           {latesEpisodes.map(episode => {
-
             return (
-                  /*Key usando para melhora performarce do react na hora de indexa os components*/
-                <li key={episode.id}>
-                 <Image 
-                  width={192} 
-                  height={192} 
-                  src={episode.thumbnail} 
-                  alt={episode.title} 
-                  />
+              /*Key usando para melhora performarce do react na hora de indexa os components*/
+              <li key={episode.id}>
+                <Image
+                  width={192}
+                  height={192}
+                  src={episode.thumbnail}
+                  alt={episode.title}
+                />
 
-                  <div className={styles.episodeDetails}>
-                    <Link href={`/episodes/${episode.id}`}>
+                <div className={styles.episodeDetails}>
+                  <Link href={`/episodes/${episode.id}`}>
                     <a >{episode.title}</a>
-                    </Link>
-                    <p>{episode.members}</p>
-                    <span>{episode.publishedAt}</span>
-                    <span>{episode.durationAsString}</span>
-                  </div>
+                  </Link>
+                  <p>{episode.members}</p>
+                  <span>{episode.publishedAt}</span>
+                  <span>{episode.durationAsString}</span>
+                </div>
 
-                  <button type="button">
-                    <img src="/play-green.svg" alt="Toca Episode" />
-                  </button>
-                  
-                </li>
-              )
+                <button type="button" onClick={ ()  => play(episode)}>
+                  <img src="/play-green.svg" alt="Toca Episode" />
+                </button>
+
+              </li>
+            )
 
           })}
         </ul>
@@ -72,55 +74,55 @@ export default function Home({ latesEpisodes, allEpisodes }: HomeProps) {
       </section>
 
       <section className={styles.allEpisodes}>
-            <h2>Todos Episodeos</h2>
+        <h2>Todos Episodeos</h2>
 
-            <table cellSpacing={0}>
-              <thead>
-                <tr>
+        <table cellSpacing={0}>
+          <thead>
+            <tr>
               <th>Poscast</th>
               <th>Integramtes</th>
               <th>Data</th>
               <th>Duração</th>
-              </tr>
-              </thead>
-              <tbody>
-              {allEpisodes.map(episode => {
-                return (
+            </tr>
+          </thead>
+          <tbody>
+            {allEpisodes.map(episode => {
+              return (
 
-                  <tr key={episode.id}>
-                    <td style={{width:72}}><Image 
-                          width={120}
-                          height={120}
-                          src={episode.thumbnail}
-                          alt={episode.title}
-                          objectFit="cover"
-                    />
-                    </td>
+                <tr key={episode.id}>
+                  <td style={{ width: 72 }}><Image
+                    width={120}
+                    height={120}
+                    src={episode.thumbnail}
+                    alt={episode.title}
+                    objectFit="cover"
+                  />
+                  </td>
 
-                    <td>
+                  <td>
                     <Link href={`/episodes/${episode.id}`}>
-                    <a >{episode.title}</a>
+                      <a >{episode.title}</a>
                     </Link>
-                    </td>
-                    <td>{episode.members}</td>
-                    <td style={{width:105}}>{episode.publishedAt}</td>
-                    <td>{episode.durationAsString}</td>
-                    <td>
-                      <button type="button">
-                        <img src="/play-green.svg" alt="Tocar Episode" />
-                      </button>
-                    </td>
-                 
+                  </td>
+                  <td>{episode.members}</td>
+                  <td style={{ width: 105 }}>{episode.publishedAt}</td>
+                  <td>{episode.durationAsString}</td>
+                  <td>
+                    <button type="button">
+                      <img src="/play-green.svg" alt="Tocar Episode" />
+                    </button>
+                  </td>
 
 
-                  </tr>
+
+                </tr>
 
 
-                )
-              })}
+              )
+            })}
 
-              </tbody>
-            </table>
+          </tbody>
+        </table>
 
       </section>
     </div>

@@ -6,6 +6,7 @@ import { durationParseToString } from '../../utils/durationparseToString';
 import styles from './episode.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import {useRouter} from 'next/router';
 
 type Episode = {
     id: string,
