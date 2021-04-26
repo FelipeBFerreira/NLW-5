@@ -84,7 +84,7 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
     const hasNext = isShuffling || (currentEpisodeIndex + 1) < episodeList.length;
 
     function playNext() {
-        if (!isShuffling) {
+        if (isShuffling) {
             const nextRandomEpisodeIndex = Math.floor(Math.random() * episodeList.length);
             setCurrentEpisodeIndex(nextRandomEpisodeIndex);
         } else if (hasNext) {
@@ -96,7 +96,10 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
 
     function playProvious() {
 
-        if (hasPrevious) {
+        if (isShuffling) {
+            const nextRandomEpisodeIndex = Math.floor(Math.random() * episodeList.length);
+            setCurrentEpisodeIndex(nextRandomEpisodeIndex);
+        } else if (hasPrevious) {
             setCurrentEpisodeIndex(currentEpisodeIndex - 1);
         }
     }
